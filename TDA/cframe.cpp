@@ -7,6 +7,7 @@ cframe::cframe(QWidget *parent)
 {
     ui->setupUi(this);
     //PESTAÑAS ANTERIORES
+    ui->tabWidget->tabBar()->hide();
     MostrarSimple();
     MPila();
     MCola();
@@ -22,6 +23,7 @@ cframe::cframe(QWidget *parent)
     ui->CB_ORDEN->setVisible(false);
 
     ui->frameC2->setEnabled(false);
+
 
 }
 
@@ -472,6 +474,7 @@ void cframe::on_pushButton_clicked()
     if(ui->le_frase->text().isEmpty()){
         QMessageBox::warning(this, "NO funca", "No deje campos vacios");
     }else{
+        string frase=ui->le_frase->text().toStdString();
         if(ui->rb_cifrar->isChecked()){
 
         }else if(ui->rb_descifrar->isChecked()){

@@ -88,7 +88,8 @@ private:
     int Modular(int x, int N, int n);
     lista<char> criptoABC;
     lista<char> criptoINT;
-
+    void insertarABC();
+    void insertarINT();
 
 
 
