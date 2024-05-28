@@ -534,11 +534,31 @@ void cframe::insertarABC()
     for (int i=0;i<10 ;i++ ) {
         criptoABC.InsertarFin('0'+i);
     }
-    criptoABC.InsertarFin('/');
+    criptoABC.InsertarFin(':');
+    criptoABC.InsertarFin(';');
+    criptoABC.InsertarFin('<');
+    criptoABC.InsertarFin('=');
+    criptoABC.InsertarFin('>');
+    criptoABC.InsertarFin('?');
+    criptoABC.InsertarFin('@');
 
     for (int i=0;i<25 ;i++ ) {
         criptoABC.InsertarFin('A'+i);
     }
+    criptoABC.InsertarFin('[');
+    criptoABC.InsertarFin('\\');
+    criptoABC.InsertarFin(']');
+    criptoABC.InsertarFin('^');
+    criptoABC.InsertarFin('_');
+    criptoABC.InsertarFin('`');
+
+    for (int i=0;i<25 ;i++ ) {
+        criptoABC.InsertarFin('a'+i);
+    }
+    for (int i = 127; i <= 165; i++) {
+        criptoABC.InsertarFin((char)i);
+    }
+
 }
 void cframe::insertarINT(){
     for (int i=32;i<166;i++){
