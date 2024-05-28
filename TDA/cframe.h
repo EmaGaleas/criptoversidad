@@ -82,8 +82,13 @@ private:
 
     int h;
     int m=0;
+
+
     vector<int *> de2bi(int x);
     int Modular(int x, int N, int n);
+    lista<char> criptoABC;
+    lista<char> criptoINT;
+
 
 
 

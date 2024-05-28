@@ -512,3 +512,23 @@ int cframe::Modular(int b, int N, int n){
 
 }
 
+void cframe::insertarABC()
+{
+    criptoABC.InsertarFin(' ');
+    criptoABC.InsertarFin('!');
+    criptoABC.InsertarFin('"');
+    criptoABC.InsertarFin('#');
+    criptoABC.InsertarFin('$');
+    criptoABC.InsertarFin('%');
+    criptoABC.InsertarFin('&');
+    criptoABC.InsertarFin(''');
+    criptoABC.InsertarFin('(');
+    criptoABC.InsertarFin(')');
+    criptoABC.InsertarFin('*');
+    criptoABC.InsertarFin('+');
+    criptoABC.InsertarFin(',');
+    criptoABC.InsertarFin('-');
+    criptoABC.InsertarFin('.');
+    criptoABC.InsertarFin('/');
+}
+
