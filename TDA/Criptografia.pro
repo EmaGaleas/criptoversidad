@@ -13,16 +13,10 @@ SOURCES += \
     cframe.cpp
 
 HEADERS += \
-    arbol.h \
     cframe.h \
-    cola.h \
-    colaD.h \
     lista.h \
-    listaD.h \
     nodo.h \
-    nodoD.h \
-    pila.h \
-    pilasD.h
+    nodoD.h
 
 FORMS += \
     cframe.ui
@@ -31,3 +25,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    Criptografia.pro.user
