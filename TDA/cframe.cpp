@@ -6,6 +6,11 @@ cframe::cframe(QWidget *parent)
     , ui(new Ui::cframe)
 {
     ui->setupUi(this);
+   // Inicializo la tabla
+      ui->tableWidget->setColumnCount(3);
+       ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Ingreso" << "Cifrado" << "Descifrado");
+       ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     //PESTAÑAS ANTERIORES
     ui->tabWidget->tabBar()->hide();
     MostrarSimple();
@@ -468,22 +473,39 @@ void cframe::on_rb_descifrar_clicked()
 
 }
 
+int cframe::encrypt(int message) {
+    return Modular(message, 11413, 3533);
+}
+int cframe::decrypt(int cipher) {
+    return Modular(cipher, 11413, 6597);
+}
 
 void cframe::on_pushButton_clicked()
 {
     if(ui->le_frase->text().isEmpty()){
         QMessageBox::warning(this, "NO funca", "No deje campos vacios");
-    }else{
-        string frase=ui->le_frase->text().toStdString();
-        if(ui->rb_cifrar->isChecked()){
-
-        }else if(ui->rb_descifrar->isChecked()){
-
-        }
-        ui->le_frase->clear();
-        ui->frameC2->setEnabled(false);
-        ui->frameC1->setEnabled(true);
+        return;
     }
+    QString frase = ui->le_frase->text();
+    int row = ui->tableWidget->rowCount();
+    ui->tableWidget->insertRow(row);
+    int numero = frase.toInt();
+
+    if(ui->rb_cifrar->isChecked()){
+        int encrypted = encrypt(numero);
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(frase));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(encrypted)));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(""));
+    } else if(ui->rb_descifrar->isChecked()){
+        int decrypted = decrypt(numero);
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(frase));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(""));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(decrypted)));
+    }
+
+    ui->le_frase->clear();
+    ui->frameC2->setEnabled(false);
+    ui->frameC1->setEnabled(true);
 }
 
 vector<int *> cframe::de2bi(int x){

@@ -90,7 +90,8 @@ private:
     lista<char> criptoINT;
     void insertarABC();
     void insertarINT();
-
+    int encrypt(int);
+    int decrypt(int);
 
 
 };
