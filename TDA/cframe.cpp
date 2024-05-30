@@ -70,7 +70,6 @@ void cframe::on_pushButton_clicked()
     QString frase = ui->le_frase->text();
     int row = ui->TW_MOSTRAR->rowCount();
     ui->TW_MOSTRAR->insertRow(row);
-
     if(ui->rb_cifrar->isChecked()){
         QString encrypted = encryptText(frase);
         ui->TW_MOSTRAR->setItem(row, 0, new QTableWidgetItem(frase));
@@ -82,7 +81,6 @@ void cframe::on_pushButton_clicked()
         ui->TW_MOSTRAR->setItem(row, 1, new QTableWidgetItem(""));
         ui->TW_MOSTRAR->setItem(row, 2, new QTableWidgetItem(decrypted));
     }
-
     ui->le_frase->clear();
     ui->frameC2->setEnabled(false);
     ui->frameC1->setEnabled(true);
