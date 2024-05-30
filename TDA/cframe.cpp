@@ -41,45 +41,53 @@ long cframe::encrypt(long message) {
 long cframe::decrypt(long cipher) {
     return Modular(cipher, 11413, 6597);
 }
+QString cframe::encryptText(const QString& input) {
+    QString result;
+    for (QChar ch : input) {
+        int asciiValue = ch.unicode();
+        int encryptedValue = encrypt(asciiValue);
+        result += QString::number(encryptedValue) + " ";
+    }
+    return result.trimmed();
+}
 
+QString cframe::decryptText(const QString& input) {
+    QStringList encryptedValues = input.split(" ");
+    QString decryptedText;
+    for (const QString& value : encryptedValues) {
+        int encryptedValue = value.toInt();
+        int decryptedValue = decrypt(encryptedValue);
+        decryptedText += QChar(decryptedValue);
+    }
+    return decryptedText;
+}
 void cframe::on_pushButton_clicked()
 {
-//    timer =new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(funcionActivacionTimer()));
-//    timer->start(20000);
-
     if(ui->le_frase->text().isEmpty()){
         QMessageBox::warning(this, "NO funca", "No deje campos vacios");
         return;
     }
     QString frase = ui->le_frase->text();
-    short row = ui->TW_MOSTRAR->rowCount();
-    string frasee=ui->le_frase->text().toStdString();
+    int row = ui->TW_MOSTRAR->rowCount();
     ui->TW_MOSTRAR->insertRow(row);
 
-    for (int i=0; i<frase.length(); i++) {
-        Frase.InsertarFin(frasee[i]);
-    }
-    long numero = frase.toULong();
-
-    if(ui->rb_cifrar->isChecked() && ui->le_frase->text().toInt()==numero ){
-        int encrypted = encrypt(numero);
+    if(ui->rb_cifrar->isChecked()){
+        QString encrypted = encryptText(frase);
         ui->TW_MOSTRAR->setItem(row, 0, new QTableWidgetItem(frase));
-        ui->TW_MOSTRAR->setItem(row, 1, new QTableWidgetItem(QString::number(encrypted)));
+        ui->TW_MOSTRAR->setItem(row, 1, new QTableWidgetItem(encrypted));
         ui->TW_MOSTRAR->setItem(row, 2, new QTableWidgetItem(""));
-
-    } else if(ui->rb_descifrar->isChecked() && ui->le_frase->text().toInt()==numero ){
-        int decrypted = decrypt(numero);
+    } else if(ui->rb_descifrar->isChecked()){
+        QString decrypted = decryptText(frase);
         ui->TW_MOSTRAR->setItem(row, 0, new QTableWidgetItem(frase));
         ui->TW_MOSTRAR->setItem(row, 1, new QTableWidgetItem(""));
-        ui->TW_MOSTRAR->setItem(row, 2, new QTableWidgetItem(QString::number(decrypted)));
-
+        ui->TW_MOSTRAR->setItem(row, 2, new QTableWidgetItem(decrypted));
     }
 
     ui->le_frase->clear();
     ui->frameC2->setEnabled(false);
     ui->frameC1->setEnabled(true);
 }
+
 
 vector<long *> cframe::de2bi(long x){
 

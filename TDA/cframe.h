@@ -42,6 +42,8 @@ private:
     void insertarINT();
     long encrypt(long);
     long decrypt(long);
+    QString encryptText(const QString& input);
+    QString decryptText(const QString& input);
 
 };
 #endif // CFRAME_H
