@@ -37,8 +37,8 @@ void cframe::cifrar()
             }
         }
     }
+    mostrar(cadena,  cifrado);
 
-    QMessageBox::information(this, "ENCRIPTADO", QString::fromStdString(cifrado));
     return;
 
 }
@@ -64,8 +64,8 @@ void cframe::descifrar() {
         descifrado += (char) inversa;
 
     }
+    mostrar(cifrado,  descifrado);
 
-    QMessageBox::information(this, "ASD", QString::fromStdString(descifrado));
 }
 
 void cframe::llenarListaChars() {
@@ -119,6 +119,31 @@ void cframe::llenarListaChars() {
         criptoCHAR.push_back(Modular((int) criptoABC.at(i), 11413, 3533));
     }
 
+//    criptoABC.push_back(' ');
+//    criptoABC.push_back('!');
+//    criptoABC.push_back('#');
+//    criptoABC.push_back('$');
+//    criptoABC.push_back(',');
+//    criptoABC.push_back('.');
+
+//    for (int i = 0; i < 10; i++) {
+//        criptoABC.push_back('0' + i);
+//    }
+
+//    criptoABC.push_back(';');
+
+//    for (int i = 0; i < 26; i++) {
+//        criptoABC.push_back('A' + i);
+//    }
+
+//    for (int i = 0; i < 26; i++) {
+//        criptoABC.push_back('a' + i);
+//    }
+
+//    for (int i = 0; i< criptoABC.size(); i++) {
+//        criptoABC.push_back(Modular((int) criptoABC.at(i), 11413, 3533));
+//    }
+
     ordenarVector(criptoCHAR);
 }
 
@@ -145,6 +170,31 @@ void cframe::on_Btn_Aceptar_clicked()
     } else if (ui->RB_Descifrar->isChecked()) {
         descifrar();
     }
+}
+
+void cframe::mostrar(string ingresado, string criptico)
+{
+    ui->TW_Mostrar->setColumnCount(3);
+    QStringList headers;
+    headers << "Ingresado" << "Cifrar" << "Descifrar";
+    ui->TW_Mostrar->setHorizontalHeaderLabels(headers);
+    ui->TW_Mostrar->resizeColumnsToContents();
+    int rowCount = ui->TW_Mostrar->rowCount();
+    ui->TW_Mostrar->insertRow(rowCount);
+
+    ui->TW_Mostrar->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(ingresado)));
+
+    // Verificar si el radio button de cifrado está marcado
+    if (ui->RB_Cifrar->isChecked()) {
+        ui->TW_Mostrar->setItem(rowCount, 1, new QTableWidgetItem(QString::fromStdString(criptico)));
+
+    }else{
+        ui->TW_Mostrar->setItem(rowCount, 2, new QTableWidgetItem(QString::fromStdString(criptico)));
+
+    }
+
+    ui->TW_Mostrar->resizeColumnsToContents();
+
 }
 
 vector<int *> cframe::de2bi(int x)

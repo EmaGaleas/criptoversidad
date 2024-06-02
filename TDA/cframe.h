@@ -22,6 +22,7 @@ public:
 
 private slots:
     void on_Btn_Aceptar_clicked();
+    void mostrar(string,string);
 
 private:
     Ui::cframe *ui;
