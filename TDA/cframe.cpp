@@ -29,11 +29,10 @@ void cframe::cifrar()
         int mod = Modular(ascii, 11413, 3533);
 
 
-        // Busca la posición del valor modulado en la lista de caracteres disponibles
-        for (int pos = 0; pos < chars.size(); pos++)
+        for (int pos = 0; pos < criptoABC.size(); pos++)
         {
-            if (charsMod.at(pos) == mod) {
-                cifrado += chars.at(pos);
+            if (criptoCHAR.at(pos) == mod) {
+                cifrado += criptoABC.at(pos);
                 break;
             }
         }
@@ -42,14 +41,6 @@ void cframe::cifrar()
     QMessageBox::information(this, "ENCRIPTADO", QString::fromStdString(cifrado));
     return;
 
-    /*
-    PtrAct = N.PrimPtr;
-    for (; PtrAct!=0; PtrAct=PtrAct->SigPtr) {
-        O.InsertarCreciente(Modular(PtrAct->Dato,11413,3533));
-        //QMessageBox::information(this,".:.",QString::number(Modular(PtrAct->Dato,11413,3533)));
-        //QMessageBox::information(this,".:.",QString::number(Modular(PtrAct->Dato,11413,3533))+"\t"+QString::number(O.PrimPtr->Dato));
-    }
-    */
 }
 
 void cframe::descifrar() {
@@ -57,18 +48,15 @@ void cframe::descifrar() {
     string descifrado = "";
 
     for (int i = 0; i < cifrado.size(); i++) {
-        // Buscar la posicion de ese char en los disponibles
         int posC;
-
-        for (int pos = 0; pos < chars.size(); pos++) {
-            if (chars.at(pos) == cifrado.at(i)) {
+        for (int pos = 0; pos < criptoABC.size(); pos++) {
+            if (criptoABC.at(pos) == cifrado.at(i)) {
                 posC = pos;
                 break;
             }
         }
 
-        int mod = charsMod.at(posC);
-
+        int mod = criptoCHAR.at(posC);
         int inversa = Modular(mod, 11413, 6597);
         cout << inversa << "\n";
         cout << (char) mod << "\n";
@@ -78,6 +66,76 @@ void cframe::descifrar() {
     }
 
     QMessageBox::information(this, "ASD", QString::fromStdString(descifrado));
+}
+
+void cframe::llenarListaChars() {
+    criptoABC.push_back(' ');
+    criptoABC.push_back('!');
+    criptoABC.push_back('"');
+    criptoABC.push_back('#');
+    criptoABC.push_back('$');
+    criptoABC.push_back('%');
+    criptoABC.push_back('&');
+    criptoABC.push_back('\'');
+    criptoABC.push_back('(');
+    criptoABC.push_back(')');
+    criptoABC.push_back('*');
+    criptoABC.push_back('+');
+    criptoABC.push_back(',');
+    criptoABC.push_back('-');
+    criptoABC.push_back('.');
+    criptoABC.push_back('/');
+
+    for (int i=0;i<10 ;i++ ) {
+        criptoABC.push_back('0'+i);
+    }
+    criptoABC.push_back(':');
+    criptoABC.push_back(';');
+    criptoABC.push_back('<');
+    criptoABC.push_back('=');
+    criptoABC.push_back('>');
+    criptoABC.push_back('?');
+    criptoABC.push_back('@');
+
+    for (int i=0;i<25 ;i++ ) {
+        criptoABC.push_back('A'+i);
+    }
+    criptoABC.push_back('[');
+    criptoABC.push_back('\\');
+    criptoABC.push_back(']');
+    criptoABC.push_back('^');
+    criptoABC.push_back('_');
+    criptoABC.push_back('`');
+
+    for (int i=0;i<25 ;i++ ) {
+        criptoABC.push_back('a'+i);
+    }
+    for (int i = 127; i <= 165; i++) {
+        criptoABC.push_back((char)i);
+    }
+
+
+    for (int i = 0; i< criptoABC.size(); i++) {
+        criptoCHAR.push_back(Modular((int) criptoABC.at(i), 11413, 3533));
+    }
+
+    ordenarVector(criptoCHAR);
+}
+
+void cframe::ordenarVector(vector<int> &vec) {
+    int n = vec.size();
+
+    //elementos del vector
+    for (int i = 0; i < n - 1; i++) {
+        //comparar y intercambiar elementos
+        for (int j = 0; j < n - i - 1; j++) {
+            if (vec[j] > vec[j + 1]) {
+                int temp = vec[j];
+                vec[j] = vec[j + 1];
+                vec[j + 1] = temp;
+            }
+        }
+    }
 }
 
 void cframe::on_Btn_Aceptar_clicked()
