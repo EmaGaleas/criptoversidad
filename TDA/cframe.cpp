@@ -10,6 +10,17 @@ cframe::cframe(QWidget *parent)
 {
     ui->setupUi(this);
     llenarListaChars();
+    ui->frame_fondo->setStyleSheet("background-color: #87CEEB;");
+    ui->Btn_Aceptar->setStyleSheet("background-color: #2596be;");
+    ui->TW_Mostrar->setStyleSheet("background-color: #d0f0ef;");
+
+    //letra
+    ui->TBx_Frase->setStyleSheet("color: black;");
+    ui->RB_Cifrar->setStyleSheet("color: black;");
+    ui->RB_Descifrar->setStyleSheet("color: black;");
+
+
+
 }
 
 cframe::~cframe()
