@@ -1,20 +1,17 @@
-#ifndef LISTA_H
-#define LISTA_H
-#include <nodo.h>
-#include <iostream>
-using std::cout;
-using std::string;
+#ifndef listaDD_H
+#define listaDD_H
+#include <nodoD.h>
 
 template<typename tipo>
-class lista{
+class listaD{
     friend class cframe;
 private:
-    nodo<tipo> *PrimPtr;
-    nodo<tipo> *UltPtr;
+    nodoD<tipo> *PrimPtr;
+    nodoD<tipo> *UltPtr;
     int Cant;
 public:
-    lista();
-    ~lista();
+    listaD();
+    ~listaD();
     void Limpiar();
     void InsertarInicio(const tipo &);
     void Insertar2daPos(const tipo &);
@@ -40,26 +37,27 @@ public:
 };
 
 template<typename tipo>
-lista<tipo>::lista() : PrimPtr(0), UltPtr(0), Cant(0)
+listaD<tipo>::listaD() : PrimPtr(0), UltPtr(0), Cant(0)
 {}
 
 template<typename tipo>
-lista<tipo>::~lista()
+listaD<tipo>::~listaD()
 {
     Limpiar();
 }
 
 template<typename tipo>
-void lista<tipo>::Limpiar()
+void listaD<tipo>::Limpiar()
 {
     if( !Vacia() ){
         cout<<"Limpiando Memoria!!!\n";
-        nodo<tipo> *ActPtr = PrimPtr;
-        nodo<tipo> *TempPtr;
+        nodoD<tipo> *ActPtr = PrimPtr;
+        nodoD<tipo> *TempPtr;
         for( ; ActPtr!=0; Cant--){
             TempPtr = ActPtr;
             cout<<TempPtr->Dato<<"\t";
             ActPtr = ActPtr->SigPtr;
+            ActPtr->AntPtr = 0;
             delete TempPtr;
         }
         cout<<"Se Completo la destruccion con el Chasquido de Azalia!!!\n";
@@ -67,54 +65,40 @@ void lista<tipo>::Limpiar()
 }
 
 template<typename tipo>
-void lista<tipo>::InsertarInicio(const tipo &Dato)//ec
+void listaD<tipo>::InsertarInicio(const tipo &Dato)
 {
-    nodo<tipo> *NuevoPtr = new nodo<tipo> (Dato);
+    nodoD<tipo> *NuevoPtr = new nodoD<tipo> (Dato);
     if(Vacia()){
        PrimPtr = UltPtr = NuevoPtr;
     }else{
         NuevoPtr->SigPtr = PrimPtr;
+        PrimPtr->AntPtr = NuevoPtr;
         PrimPtr = NuevoPtr;
     }
     Cant++;
 }
 
 template<typename tipo>
-void lista<tipo>::InsertarFinal(const tipo &Dato)
+void listaD<tipo>::InsertarFinal(const tipo &Dato)
 {
-    nodo<tipo> *NuevoPtr = new nodo<tipo> (Dato);
+    nodoD<tipo> *NuevoPtr = new nodoD<tipo> (Dato);
     if(Vacia()){
         PrimPtr = UltPtr = NuevoPtr;
     }else{
         UltPtr->SigPtr = NuevoPtr;
+        NuevoPtr->AntPtr = UltPtr;
         UltPtr = NuevoPtr;
     }
     Cant++;
 }
 
 template<typename tipo>
-void lista<tipo>::InsertarCreciente(const tipo &Dato)
-{
-    nodo<tipo> *P, *Q, *Ant;
-    if (!PrimPtr || PrimPtr->Dato > Dato){
-        InsertarInicio(Dato);
-    }else{
-        Q = PrimPtr;
-        for ( ;Q && Q->Dato < Dato; Q=Q->SigPtr){
-            Ant = Q;
-        }
-        P = new nodo<tipo>(Dato);
-        Ant->SigPtr = P;
-        P->SigPtr = Q;
-    }
-}
-
-template<typename tipo>
-bool lista<tipo>::EliminarInicio(tipo &Dato)
+bool listaD<tipo>::EliminarInicio(tipo &Dato)
 {
     if( !Vacia() ){
-        nodo<tipo> *ElimPtr = PrimPtr;
+        nodoD<tipo> *ElimPtr = PrimPtr;
         PrimPtr = PrimPtr->SigPtr;
+        PrimPtr->AntPtr = 0;
         Dato = ElimPtr->Dato;
         delete ElimPtr;
         Cant--;
@@ -125,9 +109,9 @@ bool lista<tipo>::EliminarInicio(tipo &Dato)
 }
 
 template<typename tipo>
-bool lista<tipo>::Vacia()const
+bool listaD<tipo>::Vacia()const
 {
     return PrimPtr==0;
 }
 
-#endif // LISTA_H
+#endif // listaDD_H
