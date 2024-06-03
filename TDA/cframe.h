@@ -3,8 +3,6 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <lista.h>
-#include <listaD.h>
-#include <arbol.h>
 #include <vector>
 using std::vector;
 
@@ -24,6 +22,9 @@ private slots:
     void on_Btn_Aceptar_clicked();
     void mostrar(string,string);
 
+
+
+
 private:
     Ui::cframe *ui;
     int Modular(int N, int a, int b);
@@ -39,6 +40,19 @@ private:
 
     void ordenarVector(vector<int>& vec);
 
+    lista<char> ListaABC;
+    lista<int> ListaNormal,ListaOrdenada;
+    nodo<char> *ActPtr;
+    nodo<int> *PtrAct;
+    char Letra;
+    int h,f,Pos;
+
+    void MostrarListaSimple();
+    void cifrar2();
+
+    void PreOrden();//GUI
+    void ListaChar();
+    void ListaInt();
 
 };
 #endif // CFRAME_H

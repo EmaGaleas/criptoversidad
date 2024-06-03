@@ -13,7 +13,9 @@ SOURCES += \
     cframe.cpp
 
 HEADERS += \
-    cframe.h
+    cframe.h \
+    lista.h \
+    nodo.h
 
 FORMS += \
     cframe.ui

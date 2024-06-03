@@ -72,8 +72,8 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>160</y>
-       <width>61</width>
+       <y>100</y>
+       <width>111</width>
        <height>31</height>
       </rect>
      </property>
@@ -84,7 +84,7 @@
     <widget class="QLineEdit" name="TBx_Frase">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>60</x>
        <y>160</y>
        <width>171</width>
        <height>41</height>
@@ -96,7 +96,17 @@
       <rect>
        <x>320</x>
        <y>20</y>
-       <width>511</width>
+       <width>271</width>
+       <height>571</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="TW_Mostrar2">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>20</y>
+       <width>271</width>
        <height>571</height>
       </rect>
      </property>

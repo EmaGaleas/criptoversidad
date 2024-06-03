@@ -18,6 +18,10 @@ cframe::cframe(QWidget *parent)
     ui->TBx_Frase->setStyleSheet("color: black;");
     ui->RB_Cifrar->setStyleSheet("color: black;");
     ui->RB_Descifrar->setStyleSheet("color: black;");
+    ListaChar();
+    ListaInt();
+    cifrar2();
+    MostrarListaSimple();
 
 
 
@@ -80,6 +84,7 @@ void cframe::descifrar() {
 }
 
 void cframe::llenarListaChars() {
+
     criptoABC.push_back(' ');
     criptoABC.push_back('!');
     criptoABC.push_back('"');
@@ -108,7 +113,7 @@ void cframe::llenarListaChars() {
     criptoABC.push_back('?');
     criptoABC.push_back('@');
 
-    for (int i=0;i<25 ;i++ ) {
+    for (int i=0;i<26 ;i++ ) {
         criptoABC.push_back('A'+i);
     }
     criptoABC.push_back('[');
@@ -118,11 +123,11 @@ void cframe::llenarListaChars() {
     criptoABC.push_back('_');
     criptoABC.push_back('`');
 
-    for (int i=0;i<25 ;i++ ) {
+    for (int i=0;i<26 ;i++ ) {
         criptoABC.push_back('a'+i);
     }
-    for (int i = 127; i <= 165; i++) {
-        criptoABC.push_back((char)i);
+    for (int i = 123; i <= 165; i++) {
+       criptoABC.push_back(static_cast<char>(i));
     }
 
 
@@ -156,6 +161,92 @@ void cframe::llenarListaChars() {
 //    }
 
     ordenarVector(criptoCHAR);
+}
+void cframe::ListaChar() {
+    ListaABC.InsertarFinal(' ');
+    ListaABC.InsertarFinal('!');
+    ListaABC.InsertarFinal('"');
+    ListaABC.InsertarFinal('#');
+    ListaABC.InsertarFinal('$');
+    ListaABC.InsertarFinal('%');
+    ListaABC.InsertarFinal('&');
+    ListaABC.InsertarFinal('\'');
+    ListaABC.InsertarFinal('(');
+    ListaABC.InsertarFinal(')');
+    ListaABC.InsertarFinal('*');
+    ListaABC.InsertarFinal('+');
+    ListaABC.InsertarFinal(',');
+    ListaABC.InsertarFinal('-');
+    ListaABC.InsertarFinal('.');
+    ListaABC.InsertarFinal('/');
+
+    for (int i=0; i<10 ; i++) {
+        ListaABC.InsertarFinal('0' + i);
+    }
+    ListaABC.InsertarFinal(':');
+    ListaABC.InsertarFinal(';');
+    ListaABC.InsertarFinal('<');
+    ListaABC.InsertarFinal('=');
+    ListaABC.InsertarFinal('>');
+    ListaABC.InsertarFinal('?');
+    ListaABC.InsertarFinal('@');
+
+    for (int i=0; i<26 ; i++) {
+        ListaABC.InsertarFinal('A' + i);
+    }
+    ListaABC.InsertarFinal('[');
+    ListaABC.InsertarFinal('\\');
+    ListaABC.InsertarFinal(']');
+    ListaABC.InsertarFinal('^');
+    ListaABC.InsertarFinal('_');
+    ListaABC.InsertarFinal('`');
+
+    for (int i=0; i<26 ; i++) {
+        ListaABC.InsertarFinal('a' + i);
+    }
+    for (int i = 123; i <= 165; i++) {
+        ListaABC.InsertarFinal(static_cast<char>(i));
+    }
+
+
+
+
+}
+
+void cframe::ListaInt()
+{
+    for (int i=32;i<166;i++){
+        ListaNormal.InsertarFinal(i);
+    }
+}
+void cframe::cifrar2()
+{
+    PtrAct = ListaNormal.PrimPtr;
+
+    for (; PtrAct!=0; PtrAct=PtrAct->SigPtr) {
+        ListaOrdenada.InsertarCreciente(Modular(PtrAct->Dato,11413,3533));
+        //QMessageBox::information(this,".:.",QString::number(Modular(PtrAct->Dato,11413,3533)));
+        //QMessageBox::information(this,".:.",QString::number(Modular(PtrAct->Dato,11413,3533))+"\t"+QString::number(O.PrimPtr->Dato));
+    }
+
+    return;
+}
+
+
+void cframe::MostrarListaSimple()
+{
+    ui->TW_Mostrar2->clear();
+    ui->TW_Mostrar2->setColumnCount(3);
+    ui->TW_Mostrar2->setHorizontalHeaderLabels(QStringList()<<"Letra"<<"ASCII"<<"Cifrado 1");
+    ui->TW_Mostrar2->setRowCount(ListaABC.Cant);
+    ActPtr = ListaABC.PrimPtr;
+    PtrAct = ListaNormal.PrimPtr;
+    nodo<int> *ColePtr = ListaOrdenada.PrimPtr;
+    for (int f=0; f<ListaABC.Cant; ActPtr=ActPtr->SigPtr, PtrAct=PtrAct->SigPtr, ColePtr=ColePtr->SigPtr, f++) {
+        ui->TW_Mostrar2->setItem(f,0,new QTableWidgetItem(QString::fromStdString("") + ActPtr->Dato));
+        ui->TW_Mostrar2->setItem(f,1,new QTableWidgetItem(QString::number(PtrAct->Dato)));
+        ui->TW_Mostrar2->setItem(f,2,new QTableWidgetItem(QString::number(ColePtr->Dato)));
+    }
 }
 
 void cframe::ordenarVector(vector<int> &vec) {
