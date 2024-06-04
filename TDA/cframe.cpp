@@ -1,13 +1,38 @@
 #include "cframe.h"
 #include "ui_cframe.h"
-#include <vector>
-using std::vector;
+#include <QtWidgets>
+#include <QImage>
+#include <QPixmap>
+#include <QLabel>
+#include <istream>
+#include <string>
+#include <sstream>
+#include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QFileDialog>
+#include <QProcess>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <QDateTime>
+#include <cstdlib>
+#include <ctime>
+#include <QFile>
+#include <QMessageBox>
+#include <QTextStream>
+using std::ofstream;
+using std::ios;
+using std::string;
+using std::ios;
+using std::cout;
 //Ema, Inge, Daniel Lorenzo, Cole, Harol, Rafael, Martín
 
 cframe::cframe(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::cframe)
 {
+
     ui->setupUi(this);
     llenarListaChars();
     ui->frame_fondo->setStyleSheet("background-color: #87CEEB;");
@@ -19,6 +44,8 @@ cframe::cframe(QWidget *parent)
     ui->RB_Cifrar->setStyleSheet("color: black;");
     ui->RB_Descifrar->setStyleSheet("color: black;");
 
+    ui->frame_no->setVisible(false);
+
 
 
 }
@@ -29,10 +56,9 @@ cframe::~cframe()
 }
 
 
-void cframe::cifrar()
+string cframe::cifrar(string cadena)
 {
 
-    string cadena = ui->TBx_Frase->text().toStdString();
     string cifrado = "";
 
     for (int i = 0; i < cadena.size(); i++) {
@@ -40,130 +66,65 @@ void cframe::cifrar()
         int mod = Modular(ascii, 11413, 3533);
 
 
-        for (int pos = 0; pos < criptoABC.size(); pos++)
+        for (int pos = 0; pos < criptoABC1.size(); pos++)
         {
             if (criptoCHAR.at(pos) == mod) {
-                cifrado += criptoABC.at(pos);
+                cifrado += criptoABC1.at(pos);
                 break;
             }
         }
     }
-    mostrar(cadena,  cifrado);
 
-    return;
-
-}
-
-void cframe::descifrar() {
-    string cifrado = ui->TBx_Frase->text().toStdString();
-    string descifrado = "";
-
-    for (int i = 0; i < cifrado.size(); i++) {
-        int posC;
-        for (int pos = 0; pos < criptoABC.size(); pos++) {
-            if (criptoABC.at(pos) == cifrado.at(i)) {
-                posC = pos;
-                break;
-            }
-        }
-
-        int mod = criptoCHAR.at(posC);
-        int inversa = Modular(mod, 11413, 6597);
-        cout << inversa << "\n";
-        cout << (char) mod << "\n";
-
-        descifrado += (char) inversa;
-
-    }
-    mostrar(cifrado,  descifrado);
+    return cifrado;
 
 }
+
 
 void cframe::llenarListaChars() {
-    criptoABC.push_back(' ');
-    criptoABC.push_back('!');
-    criptoABC.push_back('"');
-    criptoABC.push_back('#');
-    criptoABC.push_back('$');
-    criptoABC.push_back('%');
-    criptoABC.push_back('&');
-    criptoABC.push_back('\'');
-    criptoABC.push_back('(');
-    criptoABC.push_back(')');
-    criptoABC.push_back('*');
-    criptoABC.push_back('+');
-    criptoABC.push_back(',');
-    criptoABC.push_back('-');
-    criptoABC.push_back('.');
-    criptoABC.push_back('/');
 
-    for (int i=0;i<10 ;i++ ) {
-        criptoABC.push_back('0'+i);
-    }
-    criptoABC.push_back(':');
-    criptoABC.push_back(';');
-    criptoABC.push_back('<');
-    criptoABC.push_back('=');
-    criptoABC.push_back('>');
-    criptoABC.push_back('?');
-    criptoABC.push_back('@');
+    criptoABC1.push_back(' ');
+    criptoABC1.push_back(' ');
+    criptoABC1.push_back('!');
+    criptoABC1.push_back('"');
+    criptoABC1.push_back('#');
+    criptoABC1.push_back('$');
+    criptoABC1.push_back('%');
+    criptoABC1.push_back('&');
+    criptoABC1.push_back('\'');
+    criptoABC1.push_back('(');
+    criptoABC1.push_back(')');
+    criptoABC1.push_back('*');
+    criptoABC1.push_back('+');
+    criptoABC1.push_back(',');
+    criptoABC1.push_back('-');
+    criptoABC1.push_back('.');
+    criptoABC1.push_back('/');
 
-    for (int i=0;i<25 ;i++ ) {
-        criptoABC.push_back('A'+i);
-    }
-    criptoABC.push_back('[');
-    criptoABC.push_back('\\');
-    criptoABC.push_back(']');
-    criptoABC.push_back('^');
-    criptoABC.push_back('_');
-    criptoABC.push_back('`');
 
-    for (int i=0;i<25 ;i++ ) {
-        criptoABC.push_back('a'+i);
-    }
-    for (int i = 127; i <= 165; i++) {
-        criptoABC.push_back((char)i);
+    for (int i = 0; i < 10; i++) {
+        criptoABC1.push_back('0' + i);
     }
 
+    criptoABC1.push_back(';');
 
-    for (int i = 0; i< criptoABC.size(); i++) {
-        criptoCHAR.push_back(Modular((int) criptoABC.at(i), 11413, 3533));
+    for (int i = 0; i < 26; i++) {
+        criptoABC1.push_back('A' + i);
     }
 
-//    criptoABC.push_back(' ');
-//    criptoABC.push_back('!');
-//    criptoABC.push_back('#');
-//    criptoABC.push_back('$');
-//    criptoABC.push_back(',');
-//    criptoABC.push_back('.');
+    for (int i = 0; i < 26; i++) {
+        criptoABC1.push_back('a' + i);
+    }
 
-//    for (int i = 0; i < 10; i++) {
-//        criptoABC.push_back('0' + i);
-//    }
-
-//    criptoABC.push_back(';');
-
-//    for (int i = 0; i < 26; i++) {
-//        criptoABC.push_back('A' + i);
-//    }
-
-//    for (int i = 0; i < 26; i++) {
-//        criptoABC.push_back('a' + i);
-//    }
-
-//    for (int i = 0; i< criptoABC.size(); i++) {
-//        criptoABC.push_back(Modular((int) criptoABC.at(i), 11413, 3533));
-//    }
+    for (int i = 0; i< criptoABC1.size(); i++) {
+        criptoCHAR.push_back(Modular((int) criptoABC1.at(i), 11413, 3533));
+    }
 
     ordenarVector(criptoCHAR);
 }
-
 void cframe::ordenarVector(vector<int> &vec) {
     int n = vec.size();
 
-    //elementos del vector
     for (int i = 0; i < n - 1; i++) {
-        //comparar y intercambiar elementos
         for (int j = 0; j < n - i - 1; j++) {
             if (vec[j] > vec[j + 1]) {
                 int temp = vec[j];
@@ -174,39 +135,42 @@ void cframe::ordenarVector(vector<int> &vec) {
     }
 }
 
+string cframe::extraer()
+{
+
+    QFile archivo(rutaArchivo);
+    if (!archivo.open(QIODevice::ReadOnly | QIODevice::Text))
+    {            return "Error";
+    }
+
+    QTextStream textoArchivo(&archivo);
+
+    texto = textoArchivo.readLine();
+
+    archivo.close();
+
+
+    return texto.toStdString();
+
+}
+
 void cframe::on_Btn_Aceptar_clicked()
 {
-    if(ui->RB_Cifrar->isChecked()){
-        cifrar();
-    } else if (ui->RB_Descifrar->isChecked()) {
-        descifrar();
-    }
-}
+    if(ui->TBx_Frase->text().toStdString() =="SALAmandra"){
+        if(cifrar(ui->TBx_Frase_2->text().toStdString() )==extraer()){
+            ui->Btn_Aceptar->setEnabled(false);
+            ui->te_datos->setText("Contraseña:\tSALAmandra\nContraseña cifrada:\t"+QString::fromStdString(cifrar("SALAmandra"))+"\nToken ingresado:\t"+QString::fromStdString(ui->TBx_Frase_2->text().toStdString())+"\nToken cifrado:\t"+texto);
+        }else{
+            QMessageBox::warning(this,"no","Token incorrecto");
 
-void cframe::mostrar(string ingresado, string criptico)
-{
-    ui->TW_Mostrar->setColumnCount(3);
-    QStringList headers;
-    headers << "Ingresado" << "Cifrar" << "Descifrar";
-    ui->TW_Mostrar->setHorizontalHeaderLabels(headers);
-    ui->TW_Mostrar->resizeColumnsToContents();
-    int rowCount = ui->TW_Mostrar->rowCount();
-    ui->TW_Mostrar->insertRow(rowCount);
-
-    ui->TW_Mostrar->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(ingresado)));
-
-    // Verificar si el radio button de cifrado está marcado
-    if (ui->RB_Cifrar->isChecked()) {
-        ui->TW_Mostrar->setItem(rowCount, 1, new QTableWidgetItem(QString::fromStdString(criptico)));
+        }
 
     }else{
-        ui->TW_Mostrar->setItem(rowCount, 2, new QTableWidgetItem(QString::fromStdString(criptico)));
-
+        QMessageBox::warning(this,"no","Contra icnorrecta");
     }
 
-    ui->TW_Mostrar->resizeColumnsToContents();
-
 }
+
 
 vector<int *> cframe::de2bi(int x)
 {
@@ -219,6 +183,7 @@ vector<int *> cframe::de2bi(int x)
     }
     return b;
 }
+
 
 int cframe::Modular(int b, int N, int n)
 {
@@ -234,3 +199,13 @@ int cframe::Modular(int b, int N, int n)
     }
     return a%N;
 }
+
+void cframe::on_pushButton_clicked()
+{
+    ui->te_datos->clear();
+    ui->Btn_Aceptar->setEnabled(true);
+    ui->TBx_Frase->clear();
+    ui->TBx_Frase_2->clear();
+
+}
+

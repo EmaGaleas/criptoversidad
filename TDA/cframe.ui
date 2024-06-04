@@ -29,76 +29,141 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QRadioButton" name="RB_Descifrar">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>250</y>
-       <width>96</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Descifrar</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="RB_Cifrar">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>220</y>
-       <width>96</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cifrar</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="Btn_Aceptar">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>300</y>
+       <x>70</x>
+       <y>350</y>
        <width>151</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Aceptar</string>
+      <string>Ingresar</string>
      </property>
     </widget>
     <widget class="QLabel" name="Lbl_Frase">
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>160</y>
-       <width>61</width>
+       <y>90</y>
+       <width>191</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Frase:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Contraseña:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="TBx_Frase">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>160</y>
+       <x>60</x>
+       <y>130</y>
        <width>171</width>
        <height>41</height>
       </rect>
      </property>
     </widget>
-    <widget class="QTableWidget" name="TW_Mostrar">
+    <widget class="QLineEdit" name="TBx_Frase_2">
      <property name="geometry">
       <rect>
-       <x>320</x>
-       <y>20</y>
-       <width>511</width>
-       <height>571</height>
+       <x>60</x>
+       <y>240</y>
+       <width>171</width>
+       <height>41</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Lbl_Frase_2">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>190</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Token:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_no">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>370</y>
+       <width>241</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QTableWidget" name="TW_Mostrar">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>60</y>
+        <width>121</width>
+        <height>61</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="RB_Cifrar">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>96</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cifrar</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="RB_Descifrar">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>96</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Descifrar</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QTextEdit" name="te_datos">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>90</y>
+       <width>331</width>
+       <height>211</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>330</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Limpiar</string>
      </property>
     </widget>
    </widget>
